@@ -1,4 +1,4 @@
-import 'package:ai_object_detector/controller/scan_controller.dart';
+import 'package:netraAi/controller/scan_controller.dart';
 // import 'package:audioplayers/audioplayers.dart';
 // import 'audio_handler.dart'
 import 'package:camera/camera.dart';
@@ -44,7 +44,7 @@ class CameraViewState extends StatefulWidget {
 }
 
 class _CameraViewStateState extends State<CameraViewState> {
-  var labelName = "";
+  var labelName = "Tap";
   var currencyFound = "";
 
   handleOnTap(output, controller) async {

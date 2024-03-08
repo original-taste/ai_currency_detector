@@ -1,4 +1,4 @@
-import 'package:ai_object_detector/views/camera_view.dart';
+import 'package:netraAi/views/camera_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {

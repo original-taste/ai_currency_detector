@@ -71,6 +71,8 @@ class ScanController extends GetxController {
 
   initAudioPlayer() async {
     player = AudioPlayer();
+
+    await player.play(AssetSource('sounds/intro.mp3'));
   }
 
   playCusAudio() async {
@@ -96,6 +98,8 @@ class ScanController extends GetxController {
       case '6 500':
         await player.play(AssetSource('sounds/500_r.mp3'));
         break;
+      default:
+        await player.play(AssetSource('sounds/tap_once_more.mp3'));
     }
     // await player.play(AssetSource('sounds/20_r.mp3'));
   }
