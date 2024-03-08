@@ -1,9 +1,12 @@
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:get/get.dart';
 import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+var someText = "this is it";
 
 class ScanController extends GetxController {
   @override
@@ -11,6 +14,7 @@ class ScanController extends GetxController {
     super.onInit();
     initCamera();
     initTFLite();
+    initAudioPlayer();
   }
 
   @override
@@ -22,8 +26,12 @@ class ScanController extends GetxController {
   late CameraController cameraController;
   late List<CameraDescription> cameras;
 
+  late AudioPlayer player;
+
   var isCameraInitialized = false.obs;
   var cameraCount = 0;
+  // var detector;
+  var detectedCurrencyIndex;
 
   initCamera() async {
     if (await Permission.camera.request().isGranted) {
@@ -33,16 +41,17 @@ class ScanController extends GetxController {
         ResolutionPreset.max,
       );
 
-      await cameraController.initialize().then((value) {
-        cameraController.startImageStream((image) {
-          cameraCount++;
+      await cameraController.initialize();
+      // .then((value) {
+      //   cameraController.startImageStream((image) {
+      //     cameraCount++;
 
-          if (cameraCount % 100 == 0) {
-            cameraCount = 0;
-            objectDetector(image);
-          }
-        });
-      });
+      //     if (cameraCount % 100 == 0) {
+      //       cameraCount = 0;
+      //       objectDetector(image);
+      //     }
+      //   });
+      // });
 
       isCameraInitialized(true);
       update();
@@ -60,6 +69,37 @@ class ScanController extends GetxController {
         useGpuDelegate: false);
   }
 
+  initAudioPlayer() async {
+    player = AudioPlayer();
+  }
+
+  playCusAudio() async {
+    switch (detectedCurrencyIndex) {
+      case '0 10':
+        await player.play(AssetSource('sounds/10_r.mp3'));
+        break;
+      case '1 20':
+        await player.play(AssetSource('sounds/20_r.mp3'));
+        break;
+      case '2 20_old':
+        await player.play(AssetSource('sounds/20_r.mp3'));
+        break;
+      case '3 50':
+        await player.play(AssetSource('sounds/50_r.mp3'));
+        break;
+      case '4 100':
+        await player.play(AssetSource('sounds/100_r.mp3'));
+        break;
+      case '5 200':
+        await player.play(AssetSource('sounds/200_r.mp3'));
+        break;
+      case '6 500':
+        await player.play(AssetSource('sounds/500_r.mp3'));
+        break;
+    }
+    // await player.play(AssetSource('sounds/20_r.mp3'));
+  }
+
   objectDetector(CameraImage image) async {
     var detector = await Tflite.runModelOnFrame(
         bytesList: image.planes.map((e) {
@@ -72,7 +112,11 @@ class ScanController extends GetxController {
         imageStd: 127.5);
 
     if (detector != null) {
-      log("Result is $detector");
+      // log("Result is $detector");
+      someText = detector.toString();
+      // print("ffound something! $detector");
     }
+
+    return detector;
   }
 }
