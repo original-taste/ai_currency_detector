@@ -1,4 +1,4 @@
-# ai_object_detector
+# NetraAI
 
 Detect Indian currecy using camera
 
