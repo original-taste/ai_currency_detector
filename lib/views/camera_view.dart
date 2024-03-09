@@ -4,6 +4,7 @@ import 'package:netraAi/controller/scan_controller.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 
 class CameraView extends StatelessWidget {
   const CameraView({super.key});
@@ -63,10 +64,32 @@ class _CameraViewStateState extends State<CameraViewState> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width - 20;
+    double screenHeight = MediaQuery.of(context).size.height - 300;
+
     return Scaffold(
-      // appBar: AppBar(
-        // title: Text("Something something"),
-      // ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100.0),
+        child: AppBar(
+          title: const Center(
+            child: Text("Netra Ai",
+                style: TextStyle(
+                  fontSize: 40.0,
+                  fontFamily: 'CustomFont',
+                  color: Colors.black,
+                )),
+          ),
+          toolbarHeight: 100.0,
+          // backgroundColor: Colors.transparent,
+          centerTitle: true,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Color.fromARGB(132, 0, 0, 0),
+            statusBarBrightness: Brightness.light,
+            // statusBarIconBrightness: Brightness.light,
+          ),
+        ),
+      ),
+
       body: GetBuilder<ScanController>(
           init: ScanController(),
           builder: (controller) {
@@ -99,17 +122,26 @@ class _CameraViewStateState extends State<CameraViewState> {
                     },
                     child: Column(
                       children: [
-                        CameraPreview(controller.cameraController),
+                        Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: SizedOverflowBox(
+                              size: Size(screenWidth, screenHeight),
+                              alignment: Alignment.center,
+                              child: CameraPreview(controller.cameraController),
+                            ),
+                          ),
+                        ),
                         Container(
+                          margin: const EdgeInsets.all(16.0),
+                          // padding: EdgeInsets.all(16.0),
+                          color: Colors.white,
                           child: Text("$labelName",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 80.0,
                                 fontFamily: 'CustomFont',
                                 color: Colors.black,
                               )),
-                          margin: EdgeInsets.all(16.0),
-                          // padding: EdgeInsets.all(16.0),
-                          color: Colors.white,
                         ),
                       ],
                     ))
