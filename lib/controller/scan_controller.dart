@@ -81,19 +81,16 @@ class ScanController extends GetxController {
       case '1 20':
         await player.play(AssetSource('sounds/20_r.mp3'));
         break;
-      case '2 20_old':
-        await player.play(AssetSource('sounds/20_r.mp3'));
-        break;
-      case '3 50':
+      case '2 50':
         await player.play(AssetSource('sounds/50_r.mp3'));
         break;
-      case '4 100':
+      case '3 100':
         await player.play(AssetSource('sounds/100_r.mp3'));
         break;
-      case '5 200':
+      case '4 200':
         await player.play(AssetSource('sounds/200_r.mp3'));
         break;
-      case '6 500':
+      case '5 500':
         await player.play(AssetSource('sounds/500_r.mp3'));
         break;
       default:
